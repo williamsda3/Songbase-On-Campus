@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curate Songs</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Curate Songs</h1>
+  <form id="curate-form">
+    <input type="text" id="song-title" placeholder="Song Title" required>
+    <button type="submit">Add to Curated List</button>
+  </form>
+  <p id="message"></p>
+
+  <script>
+    document.getElementById('curate-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const title = document.getElementById('song-title').value;
+      try {
+        const response = await fetch('http://127.0.0.1:5000/curate_song', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ title })
+        });
+        const data = await response.json();
+        document.getElementById('message').textContent = data.message;
+      } catch (error) {
+        document.getElementById('message').textContent = 'Error adding song to curated list.';
+      }
+    });
+  </script>
+</body>
+</html>
