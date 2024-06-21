@@ -49,7 +49,7 @@ def get_curated_songs():
 def curate_song():
     data = request.json
     song_title = data.get('title')
-    song = Song.query.filter_by(title=song_title).first()
+    song = Song.query.filter(Song.title.ilike(f'%{song_title}%')).first()
     if song:
         curated_song = CuratedSong(song_id=song.id)
         db.session.add(curated_song)
@@ -57,6 +57,7 @@ def curate_song():
         return jsonify({'message': 'Song added to curated list.'}), 201
     else:
         return jsonify({'message': 'Song not found.'}), 404
+
 
 @app.route('/admin', methods=['GET'])
 def admin():
