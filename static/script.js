@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const songListContainer = document.getElementById('song-list');
 
   try {
-    const response = await fetch('http://127.0.0.1:5000/curated_songs');
+    const response = await fetch('https://songbase-on-campus.onrender.com/curated_songs');
     const songs = await response.json();
     displaySongTitles(songs);
   } catch (error) {
