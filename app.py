@@ -1,8 +1,8 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import requests
-
+# Search the words you know to show the song it relates to
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
@@ -28,6 +28,11 @@ def preload_songs():
         db.session.commit()
     except Exception as e:
         print(f"Error preloading songs: {e}")
+
+
+@app.route('/', methods=['GET'])
+def home():
+   return render_template('index.html')
 
 @app.route('/songs', methods=['GET'])
 def get_songs():
