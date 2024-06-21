@@ -1,9 +1,10 @@
+let songs = [];
 document.addEventListener('DOMContentLoaded', async () => {
   const songListContainer = document.getElementById('song-list');
 
   try {
     const response = await fetch('https://songbase-on-campus.onrender.com/curated_songs');
-    const songs = await response.json();
+    songs = await response.json();
     displaySongTitles(songs);
   } catch (error) {
     console.error('Error fetching curated songs:', error);
@@ -48,12 +49,9 @@ function processLyrics(lyrics) {
 
 function searchSongs() {
   const query = document.getElementById('search').value.toLowerCase();
-  const songTitles = document.querySelectorAll('.song-title');
-  songTitles.forEach(song => {
-    if (song.textContent.toLowerCase().includes(query)) {
-      song.style.display = '';
-    } else {
-      song.style.display = 'none';
-    }
-  });
+  const filteredSongs = songs.filter(song => 
+    song.title.toLowerCase().includes(query) || 
+    song.lyrics.toLowerCase().includes(query)
+  );
+  displaySongTitles(filteredSongs);
 }

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curate Songs</title>
+  <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+  <h1>Curate Songs</h1>
+  <form id="curate-form">
+    <input type="text" id="song-title" placeholder="Song Title" oninput="searchSongs()" required>
+    <button type="submit">Add to Curated List</button>
+  </form>
+  <div id="song-list"></div>
+  <p id="message"></p>
+
+  <script src="static/admin.js"></script>
+</body>
+</html>
