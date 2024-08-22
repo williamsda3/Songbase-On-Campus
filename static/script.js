@@ -44,7 +44,7 @@ function goBack() {
 }
 
 function processLyrics(lyrics) {
-  return lyrics.replace(/\[.*?\]/g, ''); // Remove all chords from the lyrics
+  return lyrics.replace(/\[.*?\]/g, ''); // Remove chords from the lyrics
 }
 
 function searchSongs() {

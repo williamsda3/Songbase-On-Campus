@@ -2,7 +2,6 @@ from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import requests
-# Search the words you know to show the song it relates to
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
@@ -55,6 +54,23 @@ def curate_song():
         db.session.add(curated_song)
         db.session.commit()
         return jsonify({'message': 'Song added to curated list.'}), 201
+    else:
+        return jsonify({'message': 'Song not found.'}), 404
+
+
+@app.route('/remove_curated_song', methods=['POST'])
+def remove_curated_song():
+    data = request.json
+    song_title = data.get('title')
+    song = Song.query.filter(Song.title.ilike(f'%{song_title}%')).first()
+    if song:
+        curated_song = CuratedSong.query.filter_by(song_id=song.id).first()
+        if curated_song:
+            db.session.delete(curated_song)
+            db.session.commit()
+            return jsonify({'message': 'Song removed from curated list.'}), 200
+        else:
+            return jsonify({'message': 'Song not in curated list.'}), 404
     else:
         return jsonify({'message': 'Song not found.'}), 404
 
